@@ -5,31 +5,47 @@
 
     // laden voordat de game begint
     preload() {
-        this.load.image('composite', 'assets/composite.jpg');
+        this.load.image('composite', 'assets/composite.png');
+        this.load.image('block', 'assets/block.png');
     }
 
     // alle functies aanmaken die we nodig hebben
     create() {
-        this.image = this.add.image(400, 300, 'composite');
+        this.composite = this.add.image(150, 300, 'composite');
+
+        this.upPress1 = this.add.image(150, 100, 'block');
+        this.downPress1 = this.add.image(150, 440, 'block');
+
+        this.upPress2 = this.add.image(400, 100, 'block');
+        this.downPress2 = this.add.image(400, 440, 'block');
+
+        this.upPress3 = this.add.image(650, 100, 'block');
+        this.downPress3 = this.add.image(650, 440, 'block');
+
+        this.goingDown = true;
+
+
+
 
         // klikken op D om de foto naar rechts te slepen
         this.input.keyboard.on('keyup_D', function (event) {
-            this.image.x += 10;
+            this.composite.x += 10;
         }, this);
 
         this.key_A = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        this.key_D = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
         // met een muisklik gaat de foto naar waar je hebt geklikt
         this.input.on('pointerdown', function (event) {
-            this.image.x = event.x;
-            this.image.y = event.y;
+            this.composite.x = event.x;
+            this.composite.y = event.y;
         }, this);
 
         // klikken op P om meerdere foto's van een composiet te generen, die hun eigen
         // zwaartekracht hebben
         this.input.keyboard.on('keyup_P', function (event) {
-            var testImage = this.physics.add.image(this.image.x, this.image.y, "composite");
-            testImage.setVelocity(Phaser.Math.RND.integerInRange(-100, 100), -300);
+            var testcomposite = this.physics.add.composite(this.composite.x, this.composite.y, "composite");
+            testcomposite.setVelocity(Phaser.Math.RND.integerInRange(-100, 100), -300);
         }, this);
 
         // als je op 2 klikt ga je naar scene 2, op 3 ga je naar scene 3
@@ -43,10 +59,64 @@
         }, this);
     }
 
-    // update de plaats van de foto als je A blijft houden
-    update(delta) {
+    // update gebeurt elke frame dus 60x per sec
+    update() {
+        if (this.composite.x === 150) {
+            if (this.upPress1.y <= 300 && this.goingDown) {
+                this.upPress1.y++
+            }
+            else {
+                this.goingDown = false;
+                if (this.upPress1.y >= 100 && !this.goingDown) {
+                    this.upPress1.y--
+                }
+                else {
+                    this.goingDown = true;
+                    this.composite.x++
+                }
+            }
+        }
+        else if (this.composite.x < 400) {
+            this.composite.x++
+        }
+
+        if (this.composite.x === 400) {
+            if (this.upPress2.y <= 300 && this.goingDown) {
+                this.upPress2.y++
+            }
+            else {
+                this.goingDown = false;
+                if (this.upPress2.y >= 100 && !this.goingDown) {
+                    this.upPress2.y--
+                }
+                else {
+                    this.goingDown = true;
+                    this.composite.x++
+                }
+            }
+        }
+        else if (this.composite.x < 650 && this.composite.x >= 401) {
+            this.composite.x++
+            this.goingDown = true;
+        }
+
+        if (this.composite.x === 650) {
+            if (this.upPress3.y <= 300 && this.goingDown) {
+                this.upPress3.y++
+            }
+            else {
+                this.goingDown = false;
+                if (this.upPress3.y >= 100 && !this.goingDown) {
+                    this.upPress3.y--
+                }
+            }
+        }
+
         if (this.key_A.isDown) {
-            this.image.x--;
+            this.composite.x--;
+        }
+        if (this.key_D.isDown) {
+            this.composite.x++;
         }
     }
 }
