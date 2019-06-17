@@ -11,7 +11,7 @@
 
     // alle functies aanmaken die we nodig hebben
     create() {
-        this.composite = this.add.image(150, 300, 'composite');
+        this.composite = this.add.image(0, 300, 'composite');
 
         this.upPress1 = this.add.image(150, 100, 'block');
         this.downPress1 = this.add.image(150, 440, 'block');
@@ -23,8 +23,6 @@
         this.downPress3 = this.add.image(650, 440, 'block');
 
         this.goingDown = true;
-
-
 
 
         // klikken op D om de foto naar rechts te slepen
@@ -97,7 +95,6 @@
         }
         else if (this.composite.x < 650 && this.composite.x >= 401) {
             this.composite.x++
-            this.goingDown = true;
         }
 
         if (this.composite.x === 650) {
@@ -109,14 +106,17 @@
                 if (this.upPress3.y >= 100 && !this.goingDown) {
                     this.upPress3.y--
                 }
+                else {
+                    this.goingDown = true;
+                    this.composite.x++
+                }
             }
         }
-
-        if (this.key_A.isDown) {
-            this.composite.x--;
-        }
-        if (this.key_D.isDown) {
-            this.composite.x++;
+        else if (this.composite.x < 900 && this.composite.x >= 651) {
+            this.composite.x++
+            if (this.composite.x === 900) {
+                this.composite.x = 0
+            }
         }
     }
 }
