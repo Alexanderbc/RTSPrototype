@@ -5,13 +5,13 @@
 
     // laden voordat de game begint
     preload() {
-        this.load.image('composite', 'assets/composite.png');
-        this.load.image('block', 'assets/block.png');
+        this.load.image('composite2', 'pics/composite2.png');
+        this.load.image('block', 'pics/block.png');
     }
 
     // alle functies aanmaken die we nodig hebben
     create() {
-        this.composite = this.add.image(0, 300, 'composite');
+        this.composite = this.add.image(0, 300, 'composite2');
 
         this.upPress1 = this.add.image(150, 100, 'block');
         this.downPress1 = this.add.image(150, 440, 'block');
@@ -42,14 +42,14 @@
         // klikken op P om meerdere foto's van een composiet te generen, die hun eigen
         // zwaartekracht hebben
         this.input.keyboard.on('keyup_P', function (event) {
-            var testcomposite = this.physics.add.composite(this.composite.x, this.composite.y, "composite");
+            var testcomposite = this.physics.add.composite(this.composite.x, this.composite.y, "composite2");
             testcomposite.setVelocity(Phaser.Math.RND.integerInRange(-100, 100), -300);
         }, this);
 
         // als je op 2 klikt ga je naar scene 2, op 3 ga je naar scene 3
         this.input.keyboard.on('keyup', function (event) {
-            if (event.key === "2") {
-                this.scene.start("Scene2");
+            if (event.key === "1") {
+                this.scene.start("Simulation");
             }
             if (event.key === "3") {
                 this.scene.start("Scene3");

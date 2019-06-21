@@ -1,11 +1,14 @@
 ﻿class Simulation extends Phaser.Scene {
+    constructor() {
+        super({ key: "Simulation" });
+    }
 
     preload() {
         this.load.image('logo', 'assets/sprites/phaser3-logo.png');
         this.load.image('red', 'assets/particles/red.png');
-        this.load.image('helper', 'helper.png');
-        this.load.image('composite', 'composite.png');
-        this.load.image('presser', 'presser.png');
+        this.load.image('helper', 'pics/helper.png');
+        this.load.image('composite', 'pics/composite.png');
+        this.load.image('presser', 'pics/presser.png');
     }
 
     create() {
@@ -59,13 +62,19 @@
 
         this.grabbed1 = false;
         this.grabbed2 = false;
-        this.rectReachedLowest = [false,false,false];
+        this.rectReachedLowest = [false, false, false];
 
         this.helper2 = this.add.sprite(900, 337, "helper");
         this.helper2.setOrigin(0.1, 0.4);
 
         graphics.lineStyle(5, 0x49D134, 1.0);
         graphics.strokeRect(900, 390, 300, 90);
+
+        this.input.keyboard.on('keyup', function (event) {
+            if (event.key === "2") {
+                this.scene.start("Scene1");
+            }
+        }, this);
     }
 
     update() {
@@ -177,7 +186,7 @@
         } else {
             composite.y -= this.speed;
         }
-        
+
     }
 
     moveCompositeWithHelper2(composite) {
@@ -192,10 +201,10 @@
         } else {
             composite.x += this.speed;
             //if (composite.x >= 1170) {
-                //composite.destroy();
+            //composite.destroy();
             //}
             console.log(composite.x + " " + composite.y);
-            
+
         }
     }
 }

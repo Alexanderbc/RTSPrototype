@@ -2,7 +2,7 @@
 
 var config = {
     type: Phaser.AUTO,
-    width: 800,
+    width: 1350,
     height: 800,
     physics: {
         default: 'arcade',
@@ -12,7 +12,7 @@ var config = {
     },
 
     // zet al je scenes hier voordat je eraan begint te werken
-    scene: [Scene1, Scene2, Scene3] 
+    scene: [Simulation, Scene1, Scene2, Scene3] 
     //{
     //    preload: preload,
     //    create: create
