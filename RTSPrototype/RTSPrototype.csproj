@@ -21,7 +21,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TypeScriptToolsVersion>3.3</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
     <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -68,11 +68,12 @@
     <Content Include="assets\block.png" />
     <Content Include="assets\composite.png" />
     <Content Include="GameCentral.js" />
-    <Content Include="Config.js" />
     <Content Include="index.html" />
     <Content Include="phaser.js" />
     <Content Include="phaser.min.js" />
-    <Content Include="simulation.js" />
+    <Content Include="Scene1.js" />
+    <Content Include="Scene2.js" />
+    <Content Include="Scene3.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
