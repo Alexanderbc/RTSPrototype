@@ -8,12 +8,35 @@
         this.load.image('presser', 'presser.png');
     }
 
+    readJSONFileTemperatures(file) {
+        var rawFile = new XMLHttpRequest();
+        var content = "";
+        rawFile.open("GET", file, false);
+        rawFile.onreadystatechange = function () {
+            if (rawFile.readyState === 4) {
+                if (rawFile.status === 200 || rawFile.status === 0) {
+                    this.current_json = rawFile.responseText;                    
+                }
+            }
+        };
+
+        rawFile.send(null);
+    }
+
+    getTemperatures() {
+        var file_content = this.readJSONFileTemperatures('/sensor_dummy_data.json');
+        console.log(file_content);
+    }
+
     create() {
 
         var rect = new Phaser.Geom.Rectangle(20, 320, 70, 45);
         var graphics = this.add.graphics({ fillStyle: { color: 0x7D8C8C } });
         graphics.fillRectShape(rect);
         graphics.setInteractive(rect, event);
+
+        this.add.text(400, 20, 'Temperature: ', { fontSize: '25px', fill: '#fff' });
+        this.global_temp = this.add.text(620, 20, '35 °C', { fontSize: '25px', fill: '#fff' });
 
         rect = new Phaser.Geom.Rectangle(20, 360, 150, 45);
         graphics.fillRectShape(rect);
@@ -79,6 +102,8 @@
         else {
             this.moveComposite(this.composite);
         }
+
+        this.getTemperatures();
     }
 
     moveComposite(composite) {
@@ -151,8 +176,8 @@
         }
         //console.log("Rotation: " + this.helper1.rotation.toFixed(2));
         //890
-        console.log("x: " + composite.x);
-        console.log("y: " + composite.y);
+        //console.log("x: " + composite.x);
+        //console.log("y: " + composite.y);
 
     }
 
@@ -178,6 +203,22 @@
             composite.y -= this.speed;
         }
         
+    }
+
+    fetchProdStTemp(url, callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.responseType = 'json';
+        xhr.onload = function () {
+            var status = xhr.status;
+            if (status === 200) {
+                callback(null, xhr.response);
+            } else {
+                callback(status, xhr.response);
+            }
+        };
+        
+        xhr.send();
     }
 
     moveCompositeWithHelper2(composite) {
